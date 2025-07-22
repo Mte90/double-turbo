@@ -10,10 +10,13 @@ Include only the backend path with some improvements:
 
 * [TurboDRF](https://github.com/alexandercollins/turbodrf) - Automatically generating REST APIs from your models with minimal configuration
 * [django-split-settings](https://pypi.org/project/django-split-settings/)
-* [drf-spectacular](https://pypi.org/project/drf-spectacular/)
-* [drf-stripe-subscription](https://github.com/oscarychen/drf-stripe-subscription) - WIP
+* [django-prometheus](https://pypi.org/project/django-prometheus/)
+* [drf-stripe-subscription](https://github.com/oscarychen/drf-stripe-subscription) - WIP (sync the plan to a user field)
+* [drf-api-tracking](https://pypi.org/project/drf-api-tracking/)
 * [django-watchfiles](https://pypi.org/project/django-watchfiles/)
 * [django-extensions](https://pypi.org/project/django-extensions/)
+* [django-auditlog](https://pypi.org/project/django-auditlog/)
+* [django-easy-logging](https://pypi.org/project/django-easy-logging/)
 * [python-dotenv](https://pypi.org/project/python-dotenv/)
 * TODO: django-allauth
 * `setup.py` script - Initialize the DB

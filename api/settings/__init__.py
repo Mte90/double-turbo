@@ -8,5 +8,6 @@ include(
     'auth.py',
     'db.py',
     'stripe.py',
+    'log.py'
     # optional('local_settings.py')
 )
