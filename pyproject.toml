@@ -18,6 +18,8 @@ dependencies = [
     "django-auditlog>=3.2.1",
     "django-easy-logging>=0.70",
     "drf-api-tracking>=1.8.4",
+    "django-allauth>=65.10.0",
+    "dj-rest-auth>=7.0.1",
 ]
 
 [dependency-groups]

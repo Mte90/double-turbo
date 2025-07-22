@@ -18,3 +18,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+if not DEBUG:
+    ACCOUNT_LOGIN_METHODS = {"email"}
+
+REST_AUTH = {
+    'USE_JWT': True,
+    'JWT_AUTH_COOKIE': 'jwt-auth',
+}
+
+HOST = environ.get("HOST", "http://localhost:8000")
+if DEBUG:
+    HOST = "http://localhost:8000"
+
