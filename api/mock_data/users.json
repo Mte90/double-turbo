@@ -1,0 +1,26 @@
+[
+    {
+        "nickname": "test1",
+        "email": "test1@referando.com",
+        "plan": "free",
+        "role": "viewer"
+    },
+    {
+        "nickname": "test2",
+        "email": "test2@referando.com",
+        "plan": "free",
+        "role": "vendor"
+    },
+    {
+        "nickname": "test4",
+        "email": "test4@referando.com",
+        "plan": "basic",
+        "role": "vendor"
+    },
+    {
+        "nickname": "test6",
+        "email": "test6@referando.com",
+        "plan": "advanced",
+        "role": "vendor"
+    }
+]
