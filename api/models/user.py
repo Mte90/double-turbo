@@ -7,7 +7,7 @@ from django_prometheus.models import ExportModelOperationsMixin
 class User(ExportModelOperationsMixin('user'), AbstractUser):
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
     modified_at = models.DateTimeField(_("modified at"), auto_now=True)
-    role = models.CharField(max_length=100, default="free")
+    telephone = models.CharField(max_length=100, default="")
 
     class Meta:
         db_table = "users"

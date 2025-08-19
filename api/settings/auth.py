@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 ######################################################################
 # Authentication
 ######################################################################
@@ -23,10 +25,24 @@ if not DEBUG:
 
 REST_AUTH = {
     'USE_JWT': True,
-    'JWT_AUTH_COOKIE': 'jwt-auth',
+    'USER_DETAILS_SERIALIZER': 'api.serializers.user.UserSerializer',
+    "REGISTER_SERIALIZER": "api.serializers.user.RegisterSerializer",
+    "PASSWORD_RESET_DOMAIN": "https://" + FRONTEND
+}
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=2),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
 
 HOST = environ.get("HOST", "http://localhost:8000")
-if DEBUG:
-    HOST = "http://localhost:8000"
 
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED=True
+if not DEBUG:
+    ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_ADAPTER = 'api.adapters.AccountAdapter'

@@ -2,9 +2,6 @@ from os import environ
 from pathlib import Path
 
 from django.core.management.utils import get_random_secret_key
-from django.urls import reverse_lazy
-from django.utils.translation import gettext_lazy as _
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -25,6 +22,8 @@ WSGI_APPLICATION = "api.wsgi.application"
 ROOT_URLCONF = "api.urls"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+FRONTEND = environ.get("FRONTEND", "http://localhost:3000")
 
 ######################################################################
 # Internationalization
@@ -53,14 +52,18 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'django.contrib.sites',
     "rest_framework",
     "rest_framework.authtoken",
+    'drf_yasg',
     "turbodrf",
     "drf_stripe",
     "rest_framework_tracking",
     'django_prometheus',
-    'drf_yasg',
     'auditlog',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     "dj_rest_auth",
     "dj_rest_auth.registration",
     "api",
@@ -70,6 +73,7 @@ if DEBUG:
     INSTALLED_APPS += [
         "django_extensions",
         "django_watchfiles",
+        "corsheaders",
     ]
 
 ######################################################################
@@ -85,7 +89,16 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     'django_prometheus.middleware.PrometheusAfterMiddleware',
+    "allauth.account.middleware.AccountMiddleware"
 ]
+
+if DEBUG:
+    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOW_CREDENTIALS = True
+    MIDDLEWARE += [
+        'corsheaders.middleware.CorsMiddleware',
+        'django.middleware.common.CommonMiddleware',
+    ]
 
 ######################################################################
 # Templates
@@ -105,3 +118,4 @@ TEMPLATES = [
         },
     },
 ]
+SITE_ID = 1

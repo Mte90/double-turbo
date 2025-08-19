@@ -1,13 +1,13 @@
-from split_settings.tools import include
-from split_settings.tools import optional
+from split_settings.tools import include, optional
 
 include(
     'settings.py',
     'unfold.py',
     'rest.py',
     'auth.py',
+    'log.py',
+    'email.py',
     'db.py',
     'stripe.py',
-    'log.py'
     # optional('local_settings.py')
 )

@@ -11,6 +11,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
+
 def setup_database():
     free, created = Group.objects.get_or_create(name='free')
     basic, created = Group.objects.get_or_create(name='basic')
@@ -32,9 +33,9 @@ def setup_database():
             if user_data.get('plan') == "advanced":
                 user.groups.add(advanced)
 
-            user.role = user_data.get('role')
             user.save()
     print("Database setup completed.")
+
 
 if __name__ == "__main__":
     setup_database()
