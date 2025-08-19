@@ -22,10 +22,13 @@ This project is based on [Turbo](https://github.com/unfoldadmin/turbo), an offic
  | [django-allauth](https://docs.allauth.org/) | Integrated set of Django applications addressing authentication, registration, account management. |
  | [dj-rest-auth](https://pypi.org/project/dj-rest-auth/) | Authentication for Django REST framework. |
  | `setup.py` script | Initialize the database. |
+ | Custom permissions to access REST endpoints | Un-logged access to some endpoints like the `dj-rest-auth`. |
+ | Inactive users by default | When a new user registers automatically is disabled. |
+ | More `User` endpoints | `logged` about the user data of the logged user and `logged/update`. |
 
 ## Dockerfile
 
-Ready to be used in production, it is missing potsgresql.
+(Not) Ready to be used in production (it is missing potsgresql).
 
 ## Local development
 
