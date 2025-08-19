@@ -7,7 +7,10 @@ from django.utils.translation import gettext_lazy as _
 ######################################################################
 UNFOLD = {
     "SITE_HEADER": _("Turbo Admin"),
-    "SITE_TITLE": _("Turbo Admin"),
+    "SITE_TITLE": _("Turbo Admin"),,
+    "SITE_ICON": lambda request: static("logo.png"),
+    "SHOW_HISTORY": False,
+    "SHOW_VIEW_ON_SITE": False,
     "SIDEBAR": {
         "show_search": True,
         "show_all_applications": True,
@@ -20,11 +23,6 @@ UNFOLD = {
                         "title": _("Users"),
                         "icon": "person",
                         "link": reverse_lazy("admin:api_user_changelist"),
-                    },
-                    {
-                        "title": _("Groups"),
-                        "icon": "label",
-                        "link": reverse_lazy("admin:auth_group_changelist"),
                     },
                 ],
             },

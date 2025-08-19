@@ -6,7 +6,7 @@ Easily create a pure API backend with Django, complete with an admin panel!
 
 ## Features
 
-This project is based on [Turbo](https://github.com/unfoldadmin/turbo), an official boilerplate from the [Unfold project for Django](https://unfoldadmin.com/). It includes only the backend path with some enhancements:
+This project is based on [Turbo](https://github.com/unfoldadmin/turbo), an official boilerplate from the [Unfold project for Django](https://unfoldadmin.com/). It includes only the backend part with some enhancements:
    Feature | Description |
  |---------|-------------|
  | [TurboDRF](https://github.com/alexandercollins/turbodrf) | Automatically generate REST APIs from your models with minimal configuration. |
