@@ -40,7 +40,15 @@ USE_TZ = True
 # Staticfiles
 ######################################################################
 STATIC_URL = "static/"
-
+MEDIA_URL = "/media/"
+MEDIA_ROOT = path.join(BASE_DIR, "media")
+STATIC_ROOT = path.join(BASE_DIR, "static/")
+if not DEBUG:
+    STATICFILES_FINDERS = (
+        "django.contrib.staticfiles.finders.FileSystemFinder",
+        "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+        "compressor.finders.CompressorFinder",
+    )
 ######################################################################
 # Apps
 ######################################################################
@@ -74,6 +82,8 @@ if DEBUG:
         "django_extensions",
         "django_watchfiles",
         "corsheaders",
+        "hijack",
+        "hijack.contrib.admin",
     ]
 
 ######################################################################
@@ -98,6 +108,7 @@ if DEBUG:
     MIDDLEWARE += [
         'corsheaders.middleware.CorsMiddleware',
         'django.middleware.common.CommonMiddleware',
+        "hijack.middleware.HijackUserMiddleware",
     ]
 
 ######################################################################
@@ -106,7 +117,7 @@ if DEBUG:
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

@@ -6,6 +6,7 @@ include(
     'rest.py',
     'auth.py',
     'log.py',
+    'celery.py',
     'email.py',
     'db.py',
     'stripe.py',

@@ -1,0 +1,11 @@
+deploy:
+  script:
+    # An example to update production
+    - apt-get update > /dev/null 2>&1
+    - apt-get install -y sshpass > /dev/null 2>&1
+    - echo "Testing SSH connection..."
+    - sshpass -p "$BACKENDUSERPSW" ssh -o StrictHostKeyChecking=no django@ipaddress "echo 'SSH connection successful'"
+    - echo "Running remote deploy script..."
+    - sshpass -p "$BACKENDUSERPSW" ssh -o StrictHostKeyChecking=no django@ipaddress 'cd /home/django/api && ./deploy-prod.sh'
+  only:
+    - main
