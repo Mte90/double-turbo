@@ -1,4 +1,5 @@
 from os import environ
+from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
 
@@ -7,10 +8,18 @@ from django.utils.translation import gettext_lazy as _
 ######################################################################
 UNFOLD = {
     "SITE_HEADER": _("Turbo Admin"),
-    "SITE_TITLE": _("Turbo Admin"),,
-    "SITE_ICON": lambda request: static("logo.png"),
+    "SITE_TITLE": _("Turbo Admin"),
+    # "SITE_ICON": lambda request: static("logo.png"),
     "SHOW_HISTORY": False,
     "SHOW_VIEW_ON_SITE": False,
+    # "SITE_FAVICONS": [
+    #     {
+    #         "rel": "icon",
+    #         "sizes": "32x32",
+    #         "type": "image/svg+xml",
+    #         "href": lambda request: static("logo.png"),
+    #     },
+    # ],
     "SIDEBAR": {
         "show_search": True,
         "show_all_applications": True,
@@ -28,4 +37,7 @@ UNFOLD = {
             },
         ],
     },
+    "STYLES": [
+        lambda request: static("css/admin.css"),
+    ]
 }
