@@ -1,4 +1,4 @@
-# Double Turbo Boilerplate (WIP)
+# Double Turbo Boilerplate for Django
 
 Easily create a pure API project with Django, complete with an admin panel!
 
