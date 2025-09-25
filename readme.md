@@ -1,4 +1,5 @@
 # Double Turbo Boilerplate for Django
+[![License](https://img.shields.io/badge/License-MIT%20v1-blue.svg)](https://spdx.org/licenses/MIT.html#licenseText)   
 
 Easily create a pure API project with Django, complete with an admin panel!
 
