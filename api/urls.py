@@ -8,6 +8,7 @@ schema_view = get_turbodrf_schema_view()
 from .api import UserViewSet
 
 router = TurboDRFRouter()
+router.register("users", UserViewSet, basename="user-model")
 
 urlpatterns = [
     path("api/", include(router.urls)),

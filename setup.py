@@ -8,6 +8,7 @@ from django.conf import settings
 
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import get_user_model
+from django.core.management import call_command
 
 User = get_user_model()
 
@@ -34,6 +35,12 @@ def setup_database():
                 user.groups.add(advanced)
 
             user.save()
+
+        try:
+            print("Importing Model")
+            call_command("loaddata", "./api/mock_data/models.json", verbosity=0)
+        except Exception as e:
+            print(f"Error loading models: {e}")
     print("Database setup completed.")
 
 

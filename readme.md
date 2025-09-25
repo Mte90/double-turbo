@@ -21,6 +21,7 @@ This project is based on [Turbo](https://github.com/unfoldadmin/turbo), an offic
  | [python-dotenv](https://pypi.org/project/python-dotenv/) | Read key-value pairs from a .env file and set them as environment variables. |
  | [django-allauth](https://docs.allauth.org/) | Integrated set of Django applications addressing authentication, registration, account management. |
  | [dj-rest-auth](https://pypi.org/project/dj-rest-auth/) | Authentication for Django REST framework. |
+ | [dj-hijack](https://pypi.org/project/django-hijack/) | Log in and work on behalf of other users without having to know their credentials. |
  | `setup.py` script | Initialize the database. |
  | Custom permissions to access REST endpoints | Un-logged access to some endpoints like the `dj-rest-auth`. |
  | Inactive users by default | When a new user registers automatically is disabled. |

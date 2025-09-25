@@ -46,3 +46,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 ACCOUNT_ADAPTER = 'api.adapters.AccountAdapter'
+
+LOGIN_REDIRECT_URL = "/admin/"
+HIJACK_REGISTER_ADMIN = False
+HIJACK_PERMISSION_CHECK = "hijack.permissions.superusers_and_staff"
