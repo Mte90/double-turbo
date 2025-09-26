@@ -23,7 +23,7 @@ This project is based on [Turbo](https://github.com/unfoldadmin/turbo), an offic
  | [django-allauth](https://docs.allauth.org/) | Integrated set of Django applications addressing authentication, registration, account management. |
  | [dj-rest-auth](https://pypi.org/project/dj-rest-auth/) | Authentication for Django REST framework. |
  | [dj-hijack](https://pypi.org/project/django-hijack/) | Log in and work on behalf of other users without having to know their credentials. |
- | [dj-celery](https://pypi.org/project/django-celery/) and [django-celery-beat](https://pypi.org/project/django-celery-beat/) | Log in and work on behalf of other users without having to know their credentials. |
+ | [dj-celery](https://pypi.org/project/django-celery/) and [django-celery-beat](https://pypi.org/project/django-celery-beat/) | Reliable distributed system to process vast amounts of tasks in queue or like a cron. |
  | `setup.py` script | Initialize the database. |
  | Custom permissions to access REST endpoints | Un-logged access to some endpoints like the `dj-rest-auth`. |
  | Inactive users by default | When a new user registers automatically is disabled. |
