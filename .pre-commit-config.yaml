@@ -1,0 +1,31 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.4
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+        types: [python]
+        pass_filenames: true
+
+  - repo: https://github.com/psf/black
+    rev: 25.1.0
+    hooks:
+        - id: black
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.4
+    hooks:
+      - id: ruff-format
+        types_or: [ python ]
+  - repo: local
+    hooks:
+      - id: app-prettier
+        name: run prettier
+        language: system
+        files: ^.*$
+        types_or: [javascript, json]
+        entry: |
+          bash -c 'npm run fix:prettier "${@}"' --
+  - repo: https://github.com/adamchainz/djade-pre-commit
+    rev: 1.7.0
+    hooks:
+      - id: djade

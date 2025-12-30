@@ -1,0 +1,16 @@
+[Unit]
+Description=Celery Beat Service
+After=network.target
+
+[Service]
+User=django
+Group=django
+Environment="PATH=/home/django/double-turbo/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+WorkingDirectory=/home/django/double-turbo
+ExecStart=/home/django/double-turbo/.venv/bin/celery -A api beat
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

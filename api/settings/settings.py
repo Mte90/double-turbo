@@ -85,7 +85,8 @@ if DEBUG:
         "hijack",
         "hijack.contrib.admin",
     ]
-
+else:
+    INSTALLED_APPS += ["compressor"]
 ######################################################################
 # Middleware
 ######################################################################
@@ -130,3 +131,7 @@ TEMPLATES = [
     },
 ]
 SITE_ID = 1
+
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers:DatabaseScheduler"

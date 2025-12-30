@@ -12,7 +12,7 @@ This project is based on [Turbo](https://github.com/unfoldadmin/turbo), an offic
  |---------|-------------|
  | [python-dotenv](https://pypi.org/project/python-dotenv/) | Read key-value pairs from a .env file and set them as environment variables. |
  | [TurboDRF](https://github.com/alexandercollins/turbodrf) | Automatically generate REST APIs from your models with minimal configuration. |
- | [drf-stripe-subscription](https://github.com/oscarychen/drf-stripe-subscription) | Work in progress (sync the plan to a user field). |
+ | [drf-stripe-subscription](https://github.com/oscarychen/drf-stripe-subscription) | Using [this fork](https://github.com/oscarychen/drf-stripe-subscription/pull/49) for membership associated to multiple users. |
  | [drf-api-tracking](https://pypi.org/project/drf-api-tracking/) | Track requests and responses for Django REST framework APIs. |
  | [django-split-settings](https://pypi.org/project/django-split-settings/) | Organize Django settings into multiple files and directories. |
  | [django-prometheus](https://pypi.org/project/django-prometheus/) | Export Django metrics for Prometheus. |
@@ -51,137 +51,36 @@ uv run -- python manage.py makemigrations
 uv run -- python manage.py migrate
 ```
 
-## Production (Nginx+Systemd)
+- Access the API at: [http://127.0.0.1:8000/api/](http://127.0.0.1:8000/api/)
+- Access the admin panel at: [http://127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/)
+- View API documentation (Swagger) at: [http://127.0.0.1:8000/docs/swagger/](http://127.0.0.1:8000/docs/swagger/)
 
-### /etc/nginx/sites-avalaible/default
+## Production Deployment
 
-```
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server ipv6only=on;
+### Docker
+- The provided `Dockerfile` is **production-ready**, but **PostgreSQL is not included**. You will need to set up a PostgreSQL container or service separately.
 
-    server_name domain.com;
-    return 301 https://$server_name$request_uri;
-}
-server {
+### Systemd Services
+The `/server` directory includes:
+- **Systemd service files** for Celery and Celery Beat.
+- These services **require RabbitMQ** as the message broker.
 
-    root /usr/share/nginx/html;
-    index index.html index.htm;
-
-    client_max_body_size 4G;
-    server_name domain.com; # managed by Certbot
-
-    keepalive_timeout 5;
-
-    location = / {
-        return 301 /admin/;
-    }
-
-    location / {
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header X-Forwarded-Proto $scheme;
-            proxy_set_header Host $host;
-            proxy_pass http://127.0.0.1:8000;
-            proxy_set_header X-Real-IP $remote_addr;
-    }
-
-
-    location /static/ {
-        alias /home/django/project/api/static/;
-        expires 30d;
-        access_log off;
-    }
-
-    location /media/ {
-        alias /home/django/project/api/media/;
-        expires 30d;
-        access_log off;
-    }
-
-    listen [::]:443 ssl ipv6only=on; # managed by Certbot
-    listen 443 ssl; # managed by Certbot
-    ssl_certificate /etc/letsencrypt/live/domain.com/fullchain.pem; # managed by Certbot
-    ssl_certificate_key /etc/letsencrypt/live/domain.com/privkey.pem; # managed by Certbot
-    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
-    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-
-}
-server {
-    if ($host = domain.com) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
-    listen 80 ;
-    listen [::]:80  ;
-    server_name domain.com;
-    return 404; # managed by Certbot
-
-
-}
+To enable and start the services:
+```bash
+sudo cp /server/*.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable celery.service celery-beat.service
+sudo systemctl start celery.service celery-beat.service
 ```
 
-### /etc/systemd/system/gunicorn.service
+### Nginx Configuration
+- The `/server` directory also includes an **Nginx configuration file** for serving the Django app in production.
+- Configure Nginx to point to your Django app’s static and media files, and proxy requests to the Gunicorn/Uvicorn server.
 
-```
-[Unit]
-Description=Uvicorn daemon
-Before=nginx.service
-After=network.target
+---
 
-[Service]
-WorkingDirectory=/home/django/project
-Environment="PATH=/home/django/project/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-ExecStart=/home/django/project/.venv/bin/uvicorn --workers 4 --host 0.0.0.0 --port 8000 api.asgi:application
-Restart=always
-RestartSec=5s
-SyslogIdentifier=uvicorn
-User=django
-Group=django
-StandardOutput=append:/var/log/uvicorn/output.log
-StandardError=append:/var/log/uvicorn/error.log
+## Notes
+- Always check your `.env` file for environment-specific settings.
+- For production, ensure RabbitMQ and PostgreSQL are properly configured and secured.
+- Use `systemctl status celery.service` and `systemctl status celery-beat.service` to monitor Celery services.
 
-
-[Install]
-WantedBy=multi-user.target
-```
-
-### /etc/systemd/system/celery.service
-
-```
-[Unit]
-Description=Celery Service
-After=network.target
-
-[Service]
-User=django
-Group=django
-Environment="PATH=/home/django/project/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-WorkingDirectory=/home/django/project
-ExecStart=/home/django/project/.venv/bin/celery -A api worker
-Restart=always
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
-```
-### /etc/systemd/system/celery-beat.service
-
-```
-[Unit]
-Description=Celery Beat Service
-After=network.target
-
-[Service]
-User=django
-Group=django
-Environment="PATH=/home/django/project/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-WorkingDirectory=/home/django/project
-ExecStart=/home/django/project/.venv/bin/celery -A api beat
-
-Restart=always
-RestartSec=10
-
-[Install]
-WantedBy=multi-user.target
-```
