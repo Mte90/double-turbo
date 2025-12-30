@@ -30,10 +30,6 @@ This project is based on [Turbo](https://github.com/unfoldadmin/turbo), an offic
  | More `User` endpoints | `logged` about the user data of the logged user and `logged/update`. |
  | GitLab CI example for deploy | `deploy-prod.sh` that is executed on the remote server (example). |
 
-## Dockerfile
-
-(Not) Ready to be used in production (it is missing potsgresql).
-
 ## Local development
 
 To set up your local development environment, follow these steps:
@@ -58,7 +54,7 @@ uv run -- python manage.py migrate
 ## Production Deployment
 
 ### Docker
-- The provided `Dockerfile` is **production-ready**, but **PostgreSQL is not included**. You will need to set up a PostgreSQL container or service separately.
+- The provided `Dockerfile` is **production-ready**, but **PostgreSQL is not well tested**.
 
 ### Systemd Services
 The `/server` directory includes:
